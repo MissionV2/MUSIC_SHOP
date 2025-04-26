@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.post("/", response_model=schemas.Musician)
 def create_musician(musician: schemas.MusicianCreate, db: Session = Depends(get_db)):
-    return crud.musician.create(db, obj_in=musician)
+    return crud.create(db, obj_in=musician)
 
 @router.get("/by-instrument/{instrument}", response_model=list[schemas.Musician])
 def read_musicians_by_instrument(
@@ -17,4 +17,4 @@ def read_musicians_by_instrument(
     limit: int = 100, 
     db: Session = Depends(get_db)
 ):
-    return crud.musician.get_by_instrument(db, instrument=instrument, skip=skip, limit=limit)
+    return crud.get_by_instrument(db, instrument=instrument, skip=skip, limit=limit)

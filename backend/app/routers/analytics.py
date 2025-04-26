@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from schemas import analytics as schemas
-from crud import analytics as crud
+from crud.analytics import get_ensemble_compositions_count, get_top_selling_records
 from dependencies import get_db
 from datetime import datetime
 
@@ -13,11 +13,11 @@ def get_top_selling_records(
     limit: int = 10, 
     db: Session = Depends(get_db)
 ):
-    return {"records": crud.analytics["top_selling"](db, year=year, limit=limit)}
+    return {"records": get_top_selling_records(db, year=year, limit=limit)}
 
 @router.get("/ensembles/{ensemble_id}/compositions-count")
 def get_ensemble_compositions_count(
     ensemble_id: int, 
     db: Session = Depends(get_db)
 ):
-    return {"count": crud.analytics["ensemble_compositions"](db, ensemble_id=ensemble_id)}
+    return {"count": get_ensemble_compositions_count["ensemble_compositions"](db, ensemble_id=ensemble_id)}

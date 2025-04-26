@@ -13,4 +13,4 @@ def get_performances_by_ensemble(
     limit: int = 100, 
     db: Session = Depends(get_db)
 ):
-    return crud.performance.get_by_ensemble(db, ensemble_id=ensemble_id, skip=skip, limit=limit)
+    return crud.get_by_ensemble(db, ensemble_id=ensemble_id, skip=skip, limit=limit)

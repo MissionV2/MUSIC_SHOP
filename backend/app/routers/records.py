@@ -8,7 +8,7 @@ router = APIRouter()
 
 @router.post("/", response_model=schemas.Record)
 def create_record(record: schemas.RecordCreate, db: Session = Depends(get_db)):
-    return crud.record.create(db, obj_in=record)
+    return crud.create(db, obj_in=record)
 
 @router.patch("/{record_id}/stock", response_model=schemas.Record)
 def update_record_stock(
@@ -16,7 +16,7 @@ def update_record_stock(
     quantity: int, 
     db: Session = Depends(get_db)
 ):
-    return crud.record.update_stock(db, record_id=record_id, quantity=quantity)
+    return crud.update_stock(db, record_id=record_id, quantity=quantity)
 
 @router.get("/by-label/{label_id}", response_model=list[schemas.Record])
 def get_records_by_label(
@@ -25,4 +25,4 @@ def get_records_by_label(
     limit: int = 100, 
     db: Session = Depends(get_db)
 ):
-    return crud.record.get_by_label(db, label_id=label_id, skip=skip, limit=limit)
+    return crud.get_by_label(db, label_id=label_id, skip=skip, limit=limit)

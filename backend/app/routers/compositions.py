@@ -13,4 +13,4 @@ def get_compositions_by_composer(
     limit: int = 100, 
     db: Session = Depends(get_db)
 ):
-    return crud.composition.get_by_composer(db, composer=composer, skip=skip, limit=limit)
+    return crud.get_by_composer(db, composer=composer, skip=skip, limit=limit)

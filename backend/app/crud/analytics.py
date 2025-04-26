@@ -22,7 +22,7 @@ def get_ensemble_compositions_count(
         .scalar()
     )
 
-analytics = {
-    "top_selling": get_top_selling_records,
-    "ensemble_compositions": get_ensemble_compositions_count
-}
+# analytics = {
+#     "top_selling": get_top_selling_records,
+#     "ensemble_compositions": get_ensemble_compositions_count
+# }

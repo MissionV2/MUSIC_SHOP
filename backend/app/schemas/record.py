@@ -2,11 +2,12 @@ from pydantic import BaseModel
 from typing import List, Optional
 from .label import Label
 from .performance import Performance
+from datetime import date
 
 class RecordBase(BaseModel):
     catalog_number: str
     title: str
-    release_date: str
+    release_date: date
     wholesale_price: float
     retail_price: float
     stock_quantity: int

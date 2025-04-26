@@ -4,7 +4,7 @@ from .musician import musician
 from .composition import composition
 from .performance import performance
 from .record import record
-from .analytics import analytics
+# from .analytics import analytics
 from .label import label  # Добавьте эту строку
 
 __all__ = [
@@ -14,6 +14,6 @@ __all__ = [
     'composition',
     'performance',
     'record',
-    'analytics',
+    # 'analytics',
     'label'  # И сюда
 ]
