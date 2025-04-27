@@ -1,23 +1,26 @@
+from datetime import date
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 
 class MusicianBase(BaseModel):
-    name: str
-    birth_date: str
-    instrument: str
+    full_name: str
+    birth_date: date
+    death_date: Optional[date] = None
+    nationality: Optional[str] = None
+    bio: Optional[str] = None
 
 class MusicianCreate(MusicianBase):
-    ensemble_ids: List[int] = []
+    pass
 
 class MusicianUpdate(BaseModel):
-    instrument: Optional[str] = None
+    full_name: Optional[str] = None
+    birth_date: Optional[date] = None
+    death_date: Optional[date] = None
+    nationality: Optional[str] = None
+    bio: Optional[str] = None
 
 class Musician(MusicianBase):
     id: int
-    ensembles: List["Ensemble"] = []
     
     class Config:
         orm_mode = True
-
-from .ensemble import Ensemble
-Musician.update_forward_refs()

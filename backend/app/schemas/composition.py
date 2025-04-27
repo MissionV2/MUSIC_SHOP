@@ -3,7 +3,7 @@ from typing import List, Optional
 
 class CompositionBase(BaseModel):
     title: str
-    composer: str
+    ensemble_id: int  # изменено
     year: int
 
 class CompositionCreate(CompositionBase):
@@ -11,7 +11,7 @@ class CompositionCreate(CompositionBase):
 
 class CompositionUpdate(BaseModel):
     title: Optional[str] = None
-    composer: Optional[str] = None
+    ensemble_id: Optional[int] = None  # изменено
     year: Optional[int] = None
 
 class Composition(CompositionBase):

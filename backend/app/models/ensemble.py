@@ -11,4 +11,5 @@ class Ensemble(Base):
     description = Column(Text)
     
     musicians = relationship("Musician", secondary="ensemble_musician", back_populates="ensembles")
+    compositions = relationship("Composition", back_populates="ensemble") 
     performances = relationship("Performance", back_populates="ensemble", cascade="all, delete-orphan")
