@@ -13,4 +13,4 @@ class Performance(Base):
     
     ensemble = relationship("Ensemble", back_populates="performances")
     composition = relationship("Composition", back_populates="performances")
-    records = relationship("Record", secondary="record_performance", back_populates="performances")
+    records = relationship("Record", secondary="record_performances", back_populates="performances")

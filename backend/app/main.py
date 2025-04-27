@@ -12,6 +12,6 @@ app.include_router(ensembles.router, prefix="/ensembles", tags=["Ансамбл�
 app.include_router(musician.router, prefix="/musicians", tags=["Музыканты"])
 app.include_router(compositions.router, prefix="/compositions", tags=["Композиции"])
 app.include_router(records.router, prefix="/records", tags=["Пластинки"])
-app.include_router(analytics.router, prefix="/analytics", tags=["Аналитика"])
 app.include_router(labels.router, prefix="/labels", tags=["Компании"])
+app.include_router(analytics.router, prefix="/analytics", tags=["Аналитика"])
 app.include_router(performances.router, prefix="/performances", tags=["Исполнения произведений"])

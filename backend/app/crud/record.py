@@ -1,38 +1,73 @@
 from sqlalchemy.orm import Session
-from models import Record, Performance
-from schemas import RecordCreate, RecordUpdate
-from .base import CRUDBase
+from models.record import Record  # исправленный импорт
+from models import performance
+from schemas import record as record_schemas
 
-class CRUDRecord(CRUDBase[Record, RecordCreate, RecordUpdate]):
-    def create(self, db: Session, obj_in: RecordCreate):
-        data = obj_in.dict(exclude={"performance_ids"})
-        db_obj = Record(**data)
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        if obj_in.performance_ids:
-            performances = db.query(Performance).filter(Performance.id.in_(obj_in.performance_ids)).all()
-            db_obj.performances.extend(performances)
-            db.commit()
-            db.refresh(db_obj)
-        return db_obj
-    def get_by_label(
-        self, db: Session, *, label_id: int, skip: int = 0, limit: int = 100
-    ) -> list[Record]:
-        return (
-            db.query(Record)
-            .filter(Record.label_id == label_id)
-            .offset(skip)
-            .limit(limit)
-            .all()
-        )
+def get_record(db: Session, record_id: int):
+    return db.query(Record).filter(Record.id == record_id).first()
 
-    def update_stock(
-        self, db: Session, *, record_id: int, quantity: int
-    ) -> Record:
-        record = self.get(db, record_id)
-        record.stock_quantity += quantity
-        db.commit()
-        return record
+def get_records(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(Record).offset(skip).limit(limit).all()
 
-record = CRUDRecord(Record)
+def create_record(db: Session, record_in: record_schemas.RecordCreate):
+    db_record = Record(
+        **record_in.dict(exclude={"performance_ids", "composition_ids"})
+    )
+    db.add(db_record)
+    db.commit()
+    db.refresh(db_record)
+    
+    # Добавляем связи с performances
+    if record_in.performance_ids:
+        for perf_id in record_in.performance_ids:
+            perf = db.query(performance.Performance).get(perf_id)
+            if perf:
+                db_record.performances.append(perf)
+    # Добавляем связи с compositions
+    if record_in.composition_ids:
+        for comp_id in record_in.composition_ids:
+            comp = db.query(Record.compositions.property.mapper.class_).get(comp_id)
+            if comp:
+                db_record.compositions.append(comp)
+    db.commit()
+    db.refresh(db_record)
+    return db_record
+
+def update_record(db: Session, record_id: int, record: record_schemas.RecordUpdate):
+    db_record = get_record(db, record_id)
+    if not db_record:
+        return None
+    update_data = record.dict(exclude_unset=True)
+    for field in update_data:
+        setattr(db_record, field, update_data[field])
+    db.commit()
+    db.refresh(db_record)
+    return db_record
+
+def delete_record(db: Session, record_id: int):
+    db_record = get_record(db, record_id)
+    if not db_record:
+        return None
+    db.delete(db_record)
+    db.commit()
+    return db_record
+
+def update_record_sales(db: Session, record_id: int, current_year: int, previous_year: int):
+    db_record = get_record(db, record_id)
+    if not db_record:
+        return None
+    db_record.sales_current_year = current_year
+    db_record.sales_previous_year = previous_year
+    db_record.stock_quantity -= current_year
+    db.commit()
+    db.refresh(db_record)
+    return db_record
+
+class RecordCRUD:
+    get_record = staticmethod(get_record)
+    get_records = staticmethod(get_records)
+    create_record = staticmethod(create_record)
+    update_record = staticmethod(update_record)
+    delete_record = staticmethod(delete_record)
+    update_record_sales = staticmethod(update_record_sales)
+record = RecordCRUD()

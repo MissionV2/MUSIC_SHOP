@@ -1,28 +1,54 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from schemas import record as schemas
-from crud import record as crud
+import schemas, crud
 from dependencies import get_db
 
 router = APIRouter()
 
 @router.post("/", response_model=schemas.Record)
 def create_record(record: schemas.RecordCreate, db: Session = Depends(get_db)):
-    return crud.create(db, obj_in=record)
+    return crud.record.create_record(db=db, record_in=record)
 
-@router.patch("/{record_id}/stock", response_model=schemas.Record)
-def update_record_stock(
+@router.get("/", response_model=list[schemas.Record])
+def read_records(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.record.get_records(db, skip=skip, limit=limit)
+
+@router.get("/{record_id}", response_model=schemas.Record)
+def read_record(record_id: int, db: Session = Depends(get_db)):
+    db_record = crud.record.get_record(db, record_id=record_id)
+    if not db_record:
+        raise HTTPException(status_code=404, detail="Record not found")
+    return db_record
+
+@router.put("/{record_id}", response_model=schemas.Record)
+def update_record(
     record_id: int, 
-    quantity: int, 
+    record: schemas.RecordUpdate, 
     db: Session = Depends(get_db)
 ):
-    return crud.update_stock(db, record_id=record_id, quantity=quantity)
+    db_record = crud.record.update_record(db, record_id=record_id, record=record)
+    if not db_record:
+        raise HTTPException(status_code=404, detail="Record not found")
+    return db_record
 
-@router.get("/by-label/{label_id}", response_model=list[schemas.Record])
-def get_records_by_label(
-    label_id: int, 
-    skip: int = 0, 
-    limit: int = 100, 
+@router.patch("/{record_id}/sales", response_model=schemas.Record)
+def update_sales(
+    record_id: int,
+    current_year: int,
+    previous_year: int,
     db: Session = Depends(get_db)
 ):
-    return crud.get_by_label(db, label_id=label_id, skip=skip, limit=limit)
+    db_record = crud.record.update_record_sales(
+        db, record_id=record_id, 
+        current_year=current_year, 
+        previous_year=previous_year
+    )
+    if not db_record:
+        raise HTTPException(status_code=404, detail="Record not found")
+    return db_record
+
+@router.delete("/{record_id}", status_code=204)
+def delete_record(record_id: int, db: Session = Depends(get_db)):
+    if not crud.record.delete_record(db, record_id=record_id):
+        raise HTTPException(status_code=404, detail="Record not found")
+    return None

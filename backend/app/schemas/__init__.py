@@ -3,7 +3,7 @@ from .ensemble import Ensemble, EnsembleCreate, EnsembleUpdate
 from .musician import Musician, MusicianCreate, MusicianUpdate
 from .composition import Composition, CompositionCreate, CompositionUpdate
 from .performance import Performance, PerformanceCreate, PerformanceUpdate
-from .record import Record, RecordCreate, RecordUpdate, RecordAnalytics
+from .record import Record, RecordCreate, RecordUpdate
 from .label import Label, LabelCreate
 from .analytics import SalesReport, TopSellingRecords
 
@@ -13,7 +13,7 @@ __all__ = [
     'Musician', 'MusicianCreate', 'MusicianUpdate',
     'Composition', 'CompositionCreate', 'CompositionUpdate',
     'Performance', 'PerformanceCreate', 'PerformanceUpdate',
-    'Record', 'RecordCreate', 'RecordUpdate', 'RecordAnalytics',
+    'Record', 'RecordCreate', 'RecordUpdate',
     'Label', 'LabelCreate',
     'SalesReport', 'TopSellingRecords'
 ]
