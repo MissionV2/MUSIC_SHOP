@@ -53,7 +53,9 @@ const RecordDetails: React.FC = () => {
         <b>Дата релиза:</b> {record.release_date}
       </p>
       <p>
-        <b>Лейбл:</b> {record.label?.name}
+        <Link to={`/label/${record.label.id}`}>
+          <b>Лейбл:</b> {record.label?.name}
+        </Link>
       </p>
       <p>
         <b>Цена:</b> {record.price ?? record.retail_price} ₽
