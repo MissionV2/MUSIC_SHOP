@@ -10,6 +10,10 @@ router = APIRouter()
 def create_ensemble(ensemble: schemas.EnsembleCreate, db: Session = Depends(get_db)):
     return crud.create(db, obj_in=ensemble)
 
+@router.get("/", response_model=list[schemas.Ensemble])
+def read_ensembles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_ensembles(db, skip=skip, limit=limit)
+
 @router.get("/{ensemble_id}", response_model=schemas.Ensemble)
 def read_ensemble(ensemble_id: int, db: Session = Depends(get_db)):
     db_ensemble = crud.get(db, id=ensemble_id)

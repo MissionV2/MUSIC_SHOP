@@ -18,8 +18,14 @@ class CRUDEnsemble:
             db.refresh(db_obj)
         return db_obj
 
+    def get_ensembles(db: Session, skip: int = 0, limit: int = 100):
+        return db.query(EnsembleModel).offset(skip).limit(limit).all()
+
+
     def get(self, db: Session, id: int):
         return db.query(EnsembleModel).filter(EnsembleModel.id == id).first()
+    
+    
 
     def update(self, db: Session, db_obj: EnsembleModel, obj_in: EnsembleUpdate):
         obj_data = obj_in.dict(exclude_unset=True)

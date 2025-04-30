@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 from typing import List, Optional
-
+from schemas.ensemble import Ensemble
 class CompositionBase(BaseModel):
     title: str
-    ensemble_id: int  # изменено
+    ensemble: Ensemble  # изменено
     year: int
 
 class CompositionCreate(CompositionBase):
