@@ -51,6 +51,7 @@ const RecordsList: React.FC = () => {
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <RecordCard
+              id={record.id}
               title={record.title}
               artist={record.artist || record.label?.name || ""}
               coverUrl={record.coverUrl || ""}
