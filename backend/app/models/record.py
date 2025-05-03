@@ -20,3 +20,7 @@ class Record(Base):
     label = relationship("Label", back_populates="records")
     performances = relationship("Performance", secondary="record_performances", back_populates="records")
     compositions = relationship("Composition", secondary=record_compositions, back_populates="records")
+    cart_items = relationship("CartItem", back_populates="record")
+
+# ВАЖНО: импортируйте CartItem только здесь, внизу файла, чтобы избежать циклического импорта
+from .cart import CartItem

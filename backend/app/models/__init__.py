@@ -7,6 +7,8 @@ from .record import Record
 from .label import Label
 from .record_performance import record_performance
 from .ensemble_musician import ensemble_musician
+from .user import User
+from .cart import CartItem
 
 __all__ = [
     'Base',
@@ -17,5 +19,7 @@ __all__ = [
     'Record',
     'Label',
     'record_performance',
-    'ensemble_musician'
+    'ensemble_musician',
+    'User',
+    'CartItem'
 ]
