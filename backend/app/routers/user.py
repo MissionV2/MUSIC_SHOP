@@ -1,10 +1,9 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from schemas.user import UserOut
-from dependencies import get_db, get_current_user
+from schemas.user import UserOut  # или UserFullOut, если хотите больше информации
+from dependencies import get_current_user
 
 router = APIRouter()
 
-@router.get("/users/me", response_model=UserOut)
-def read_users_me(current_user=Depends(get_current_user)):
+@router.get("/me", response_model=UserOut)
+def get_profile(current_user=Depends(get_current_user)):
     return current_user

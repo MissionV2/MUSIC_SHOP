@@ -8,6 +8,8 @@ import LableDetails from '../pages/Lable/Detail';
 import Login from "../pages/Login/Login";
 import Registration from "../pages/Registration/Registration";
 import Cart from "../pages/Cart/Cart";
+import Profile from "../pages/Profile/Profile";
+
 export const routes = [
   { path: "/", element: <Dashboard /> },
   { path: "/records", element: <RecordsList /> },
@@ -18,5 +20,6 @@ export const routes = [
   { path: "/label/:id", element: <LableDetails /> },
   { path: '/login', element: <Login/>},
   { path: '/registration', element: <Registration/>},
-  { path: '/cart', element: <Cart/>}
+  { path: '/cart', element: <Cart/>},
+  { path: "/profile", element: <Profile />}
 ];
