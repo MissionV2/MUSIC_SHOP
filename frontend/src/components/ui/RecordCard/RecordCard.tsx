@@ -1,5 +1,5 @@
 import React from "react";
-
+import record from '../../../assets/Record.png'
 interface Composition {
   id: number;
   title: string;
@@ -8,17 +8,20 @@ interface Composition {
 interface RecordCardProps {
   title: string;
   artist: string;
-  coverUrl: string;
+  coverUrl?: string;
   price: number;
   compositions: Composition[];
 }
 
-const RecordCard: React.FC<RecordCardProps> = ({ title, artist, coverUrl, price }) => (
-  <div className="border-2 border-black rounded-3xl p-4">
-    <img src={coverUrl} alt={title} />
-    <h3>{title}</h3>
-    <p>{artist}</p>
-    <strong>{price} ₽</strong>
+const RecordCard: React.FC<RecordCardProps> = ({ title, artist, price }) => (
+  <div className="bg-[#3F3434] text-center">
+    <img src={record} alt={title} className="w-full"/>
+    <div className="p-4">
+      <h3 className="text-2xl">{title}</h3>
+      <p>{artist}</p>
+      <p className="text-2xl">{price} ₽</p>
+      <button className="px-5 py-2 text-sm bg-red-500 mt-2">ДОБАВИТЬ В КОРЗИНУ</button>
+    </div>
   </div>
 );
 

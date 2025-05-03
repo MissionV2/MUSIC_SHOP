@@ -22,10 +22,12 @@ const LableDetails: React.FC = () => {
   if (!lable) return <div>Загрузка...</div>;
 
   return (
-    <div>
-      <h2>Название: {lable.name}</h2>
-      <p><b>Адрес:</b> {lable.address}</p>
-      <p><b>Оптовый продажник:</b> {lable.is_wholesaler === false ? "No" : "Yes"}</p>
+    <div className="px-4 md:px-32 sm:px-4">
+      <h2 className="w-full text-center text-3xl py-5">{lable.name}</h2>
+      <div className="flex flex-col gap-2">
+        <p><b>Адрес:</b> {lable.address}</p>
+        <p><b>Оптовый продажник:</b> {lable.is_wholesaler === false ? "No" : "Yes"}</p>
+      </div>
     </div>
   );
 };

@@ -26,16 +26,19 @@ const CompositionDetails: React.FC = () => {
   if (!composition) return <div>Загрузка...</div>;
 
   return (
-    <div>
-      <h2>Название: {composition.title}</h2>
-      <h2>Год выпуска: {composition.year}</h2>
+    <div className="px-5 uppercase md:px-32 sm:px-5">
+      <h2 className="w-full text-center text-3xl uppercase py-5">{composition.title}</h2>
+      <h2 className="mt-2">Год выпуска: {composition.year}</h2>
       {/* Если хотите показать музыкантов ансамбля: */}
       {composition.ensemble && composition.ensemble.musicians && (
-        <h2>
+        <h2 className="flex gap-2 items-center mt-2">
           Ансамбль:{" "}
           {composition.ensemble ? (
-            <Link to={`/ensemble/${composition.ensemble.id}`}>
+            <Link to={`/ensemble/${composition.ensemble.id}`} className="flex gap-5 items-center">
               {composition.ensemble.name}
+              <Link to={`/ensemble/${composition.ensemble.id}`} className="px-5 py-1 bg-red-500">
+                  Подробнее
+              </Link>
             </Link>
           ) : (
             "—"

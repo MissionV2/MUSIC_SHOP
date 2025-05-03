@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getRecordById } from "../../api/endpoints/records";
 import { Link } from "react-router-dom";
-
+import music from '../../assets/music.png'
 interface Label {
   id: number;
   name: string;
@@ -44,31 +44,39 @@ const RecordDetails: React.FC = () => {
   if (!record) return <div>Пластинка не найдена</div>;
 
   return (
-    <div>
-      <h2>{record.title}</h2>
-      <p>
-        <b>Каталожный номер:</b> {record.catalog_number}
-      </p>
-      <p>
-        <b>Дата релиза:</b> {record.release_date}
-      </p>
-      <p>
-        <Link to={`/label/${record.label.id}`}>
-          <b>Лейбл:</b> {record.label?.name}
-        </Link>
-      </p>
-      <p>
-        <b>Цена:</b> {record.price ?? record.retail_price} ₽
-      </p>
-      <div>
-        <b>Композиции:</b>
-        <ul>
-          {record.compositions.map((c) => (
-            <li key={c.id}>
-              <Link to={`/compositions/${c.id}`}>{c.title}</Link>
-            </li>
-          ))}
-        </ul>
+    <div className="container mx-auto px-4 pt-5">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col gap-4 uppercase md:w-1/2">
+          <h2 className="text-3xl text-left md:text-right">{record.title}</h2>
+          <p>
+            <b>Каталожный номер:</b> {record.catalog_number}
+          </p>
+          <p>
+            <b>Дата релиза:</b> {record.release_date}
+          </p>
+          <p className="flex gap-3 items-center">
+            <b>Лейбл:</b> {record.label?.name}
+            <Link to={`/label/${record.label.id}`} className="px-4 py-1 bg-red-500">
+               Подробнее
+            </Link>
+          </p>
+          <p>
+            <b>Цена:</b> {record.price ?? record.retail_price} ₽
+          </p>
+        </div>
+        <div className="flex flex-col md:w-1/2">
+          <b>Композиции:</b>
+          <ul className="grid grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-2 mt-2">
+            {record.compositions.map((c) => (
+              <li key={c.id} className="bg-[#3F3434] rounded-3xl overflow-hidden">
+                <Link to={`/compositions/${c.id}`} className="uppercase block">
+                    <img src={music} alt="song" className="w-full"/>
+                    <p className="text-center py-2">{c.title}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

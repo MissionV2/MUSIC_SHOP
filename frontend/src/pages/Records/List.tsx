@@ -42,8 +42,8 @@ const RecordsList: React.FC = () => {
 
   return (
     <div>
-      <h2>Список пластинок</h2>
-      <div className="grid grid-cols-2 gap-2 p-4">
+      <h2 className="w-full text-center py-6 text-3xl">КАТАЛОГ</h2>
+      <div className="grid grid-cols-1 px-10 md:grid-cols-4 sm:grid-cols-2 gap-4 md:px-52 sm:px-5">
         {records.map((record) => (
           <Link
             key={record.id}

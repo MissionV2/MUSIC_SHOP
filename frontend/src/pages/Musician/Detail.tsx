@@ -24,12 +24,17 @@ const MusicianDetails: React.FC = () => {
   if (!musician) return <div>Загрузка...</div>;
 
   return (
-    <div>
-      <h2>Имя: {musician.full_name}</h2>
-      <p><b>Дата рождения:</b> {musician.birth_date}</p>
-      <p><b>Дата смерти:</b> {musician.death_date}</p>
-      <p><b>Национальность:</b> {musician.nationality}</p>
-      <p><b>Биография:</b> {musician.bio}</p>
+    <div className="uppercase px-4 md:px-32 sm:px-5 flex flex-col gap-4 md:flex-row sm:felx-col justify-between pt-5">
+      <div className="flex flex-col gap-2">
+        <h2 className="w-full text-center text-3xl pb-5">{musician.full_name}</h2>
+        <p><b>Дата рождения:</b> {musician.birth_date}</p>
+        <p><b>Дата смерти:</b> {musician.death_date}</p>
+        <p><b>Национальность:</b> {musician.nationality}</p>
+      </div>
+      <div className="">
+        <p><b>Биография:</b></p>
+        <p>{musician.bio}</p>
+      </div>
     </div>
   );
 };
