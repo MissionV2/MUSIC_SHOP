@@ -10,4 +10,9 @@ class Label(Base):
     address = Column(Text, nullable=False)
     is_wholesaler = Column(Boolean, default=False)
     
-    records = relationship("Record", back_populates="label")
+    records = relationship(
+        "Record",
+        back_populates="label",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )

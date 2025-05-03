@@ -21,6 +21,10 @@ class RecordUpdate(BaseModel):
     retail_price: Optional[float] = None
     stock_quantity: Optional[int] = None
 
+class RecordSalesUpdate(BaseModel):
+    sales_current_year: int
+    sales_previous_year: int
+
 class Record(BaseModel):
     id: int
     catalog_number: str

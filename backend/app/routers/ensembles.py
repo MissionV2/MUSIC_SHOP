@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from schemas import ensemble as schemas
 from crud import ensemble as crud
 from dependencies import get_db
+from crud.ensemble import CRUDEnsemble
 
 router = APIRouter()
 
@@ -10,9 +11,9 @@ router = APIRouter()
 def create_ensemble(ensemble: schemas.EnsembleCreate, db: Session = Depends(get_db)):
     return crud.create(db, obj_in=ensemble)
 
-@router.get("/", response_model=list[schemas.Ensemble])
+@router.get("/")
 def read_ensembles(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return crud.get_ensembles(db, skip=skip, limit=limit)
+    return CRUDEnsemble.get_ensembles(db=db, skip=skip, limit=limit)
 
 @router.get("/{ensemble_id}", response_model=schemas.Ensemble)
 def read_ensemble(ensemble_id: int, db: Session = Depends(get_db)):

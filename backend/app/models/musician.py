@@ -12,5 +12,10 @@ class Musician(Base):
     nationality = Column(String(50))
     bio = Column(Text, nullable=True)
 
-    # compositions = relationship("Composition", back_populates="musician")
-    ensembles = relationship("Ensemble", secondary="ensemble_musician", back_populates="musicians")
+    ensembles = relationship(
+        "Ensemble",
+        secondary="ensemble_musician",
+        back_populates="musicians",
+        cascade="all, delete",
+        passive_deletes=True
+    )

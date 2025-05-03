@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import desc, func
 from models.record import Record  # исправленный импорт
 from models import performance
 from schemas import record as record_schemas
@@ -63,6 +64,25 @@ def update_record_sales(db: Session, record_id: int, current_year: int, previous
     db.refresh(db_record)
     return db_record
 
+def get_best_sellers_current_year(db: Session, limit: int = 10):
+    return (
+        db.query(Record.title)
+        .filter(Record.sales_current_year > 0)
+        .order_by(Record.sales_current_year.desc())
+        .limit(limit)
+        .all()
+    )
+
+def get_all_sorted_by_sales(db, limit: int = 100):
+    return (
+        db.query(Record)
+        .order_by(
+            (Record.sales_current_year + Record.sales_previous_year).desc()
+        )
+        .limit(limit)
+        .all()
+    )
+
 class RecordCRUD:
     get_record = staticmethod(get_record)
     get_records = staticmethod(get_records)
@@ -70,4 +90,5 @@ class RecordCRUD:
     update_record = staticmethod(update_record)
     delete_record = staticmethod(delete_record)
     update_record_sales = staticmethod(update_record_sales)
+    get_best_sellers_current_year = staticmethod(get_best_sellers_current_year)
 record = RecordCRUD()

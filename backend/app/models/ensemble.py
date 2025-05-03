@@ -10,6 +10,17 @@ class Ensemble(Base):
     formation_date = Column(Date)
     description = Column(Text)
     
-    musicians = relationship("Musician", secondary="ensemble_musician", back_populates="ensembles")
     compositions = relationship("Composition", back_populates="ensemble") 
-    performances = relationship("Performance", back_populates="ensemble", cascade="all, delete-orphan")
+    musicians = relationship(
+        "Musician",
+        secondary="ensemble_musician",
+        back_populates="ensembles",
+        cascade="all, delete",
+        passive_deletes=True
+    )
+    performances = relationship(
+        "Performance",
+        back_populates="ensemble",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )

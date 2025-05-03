@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
+from models.performance import Performance
+from models.record import Record
 from models import Ensemble as EnsembleModel, Musician as MusicianModel
-from schemas.ensemble import EnsembleCreate, EnsembleUpdate
+from schemas.ensemble import Ensemble, EnsembleCreate, EnsembleUpdate
+from models.ensemble import Ensemble  # Импортируйте ORM-модель
 
 class CRUDEnsemble:
     def create(self, db: Session, obj_in: EnsembleCreate):
@@ -19,8 +22,7 @@ class CRUDEnsemble:
         return db_obj
 
     def get_ensembles(db: Session, skip: int = 0, limit: int = 100):
-        return db.query(EnsembleModel).offset(skip).limit(limit).all()
-
+        return db.query(Ensemble).offset(skip).limit(limit).all()
 
     def get(self, db: Session, id: int):
         return db.query(EnsembleModel).filter(EnsembleModel.id == id).first()
@@ -51,5 +53,14 @@ class CRUDEnsemble:
         db.commit()
         db.refresh(ensemble)
         return ensemble
+
+    def get_records_by_ensemble(db: Session, ensemble_id: int):
+        return (
+            db.query(Record.title)
+            .join(Record.performances)
+            .join(Performance.ensemble)
+            .filter(Performance.ensemble_id == ensemble_id)
+            .all()
+        )
 
 ensemble = CRUDEnsemble()
