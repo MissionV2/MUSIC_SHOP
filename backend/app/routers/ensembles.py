@@ -4,6 +4,8 @@ from schemas import ensemble as schemas
 from crud import ensemble as crud
 from dependencies import get_db
 from crud.ensemble import CRUDEnsemble
+from schemas.composition import CompositionsCount
+from schemas.record import RecordTitles
 
 router = APIRouter()
 
@@ -45,3 +47,13 @@ def add_musician_to_ensemble(
     db: Session = Depends(get_db)
 ):
     return crud.add_musician(db, ensemble_id=ensemble_id, musician_id=musician_id)
+
+@router.get("/ensembles/{ensemble_id}/compositions-count", response_model=CompositionsCount)
+def compositions_count_by_ensemble(ensemble_id: int, db: Session = Depends(get_db)):
+    count = CRUDEnsemble.get_compositions_count_by_ensemble(db, ensemble_id)
+    return {"count": count}
+
+@router.get("/{ensemble_id}/record-titles", response_model=RecordTitles)
+def get_record_titles_by_ensemble(ensemble_id: int, db: Session = Depends(get_db)):
+    titles = CRUDEnsemble.get_record_titles_by_ensemble(db, ensemble_id)
+    return {"titles": [t[0] for t in titles]}

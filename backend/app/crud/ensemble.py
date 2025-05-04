@@ -4,6 +4,8 @@ from models.record import Record
 from models import Ensemble as EnsembleModel, Musician as MusicianModel
 from schemas.ensemble import Ensemble, EnsembleCreate, EnsembleUpdate
 from models.ensemble import Ensemble  # Импортируйте ORM-модель
+import models
+from models.composition import Composition
 
 class CRUDEnsemble:
     def create(self, db: Session, obj_in: EnsembleCreate):
@@ -60,6 +62,19 @@ class CRUDEnsemble:
             .join(Record.performances)
             .join(Performance.ensemble)
             .filter(Performance.ensemble_id == ensemble_id)
+            .all()
+        )
+
+    def get_compositions_count_by_ensemble(db: Session, ensemble_id: int) -> int:
+        return db.query(models.Composition).filter(models.Composition.ensemble_id == ensemble_id).count()
+
+    @staticmethod
+    def get_record_titles_by_ensemble(db: Session, ensemble_id: int):
+        return (
+            db.query(Record.title)
+            .join(Record.compositions)
+            .filter(Composition.ensemble_id == ensemble_id)
+            .distinct()
             .all()
         )
 

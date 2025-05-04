@@ -25,6 +25,9 @@ class RecordSalesUpdate(BaseModel):
     sales_current_year: int
     sales_previous_year: int
 
+class RecordTitles(BaseModel):
+    titles: List[str]
+
 class Record(BaseModel):
     id: int
     catalog_number: str

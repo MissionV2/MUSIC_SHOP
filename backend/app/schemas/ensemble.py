@@ -7,7 +7,10 @@ class EnsembleBase(BaseModel):
     formation_date: date
     description: Optional[str] = None
 
-class EnsembleCreate(EnsembleBase):
+class EnsembleCreate(BaseModel):
+    name: str
+    formation_date: date
+    description: Optional[str] = None
     musician_ids: List[int] = []
 
 class EnsembleUpdate(BaseModel):

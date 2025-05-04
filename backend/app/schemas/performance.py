@@ -17,7 +17,7 @@ class PerformanceUpdate(BaseModel):
 
 class Performance(PerformanceBase):
     id: int
-    ensemble: "Ensemble"
+    ensemble: Optional["Ensemble"] = None
     composition: "Composition"
     records: List["Record"] = []
     
