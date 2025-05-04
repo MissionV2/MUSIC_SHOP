@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getEnsembleById } from "../../api/endpoints/ensembles";
+import {
+  getEnsembleById,
+  getEnsembleCompositionsCount,
+  getEnsembleRecordTitles
+} from "../../api/endpoints/ensembles";
 import person from '../../assets/person-placeholder 1.png'
 interface Musician {
   id: number;
@@ -28,11 +32,19 @@ export interface Ensemble {
 const EnsembleDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [ensemble, setEnsemble] = useState<Ensemble | null>(null);
+  const [compositionsCount, setCompositionsCount] = useState<number | null>(null);
+  const [recordTitles, setRecordTitles] = useState<string[]>([]);
 
   useEffect(() => {
     if (id) {
       getEnsembleById(Number(id)).then((res: { data: Ensemble }) =>
         setEnsemble(res.data)
+      );
+      getEnsembleCompositionsCount(Number(id)).then((res: { data: { count: number } }) =>
+        setCompositionsCount(res.data.count)
+      );
+      getEnsembleRecordTitles(Number(id)).then((res: { data: { titles: string[] } }) =>
+        setRecordTitles(res.data.titles)
       );
     }
   }, [id]);
@@ -45,6 +57,17 @@ const EnsembleDetails: React.FC = () => {
           <h2 className="w-full text-center text-3xl pb-5">{ensemble.name}</h2>
           <h2>Дата формирования: {ensemble.formation_date}</h2>
           <h2>Описание: {ensemble.description}</h2>
+          <h2>
+            Количество музыкальных произведений:{" "}
+            {compositionsCount !== null ? compositionsCount : "Загрузка..."}
+          </h2>
+          <h2>Пластинки ансамбля:</h2>
+          <ul>
+            {recordTitles.length > 0
+              ? recordTitles.map((title, idx) => <li key={idx}>{title}</li>)
+              : <li>Нет данных или загрузка...</li>
+            }
+          </ul>
       </div>
       <div>
           <h3>Музыканты:</h3>

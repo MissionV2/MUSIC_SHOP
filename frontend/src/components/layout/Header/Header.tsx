@@ -19,7 +19,9 @@ const Header: React.FC = () => {
       <h1>MUSIC SHOP</h1>
       <div>
         {user ? (
-          <span>{user.username}</span>
+          <Link to={'/profile'}>
+                <span>{user.username}</span>
+          </Link>
         ) : (
           <>
             <Link to="/login">Вход</Link>

@@ -20,6 +20,9 @@ interface Record {
   release_date: string;
   wholesale_price: number;
   retail_price: number;
+  stock_quantity: number;
+  sales_previous_year: number;
+  sales_current_year: number;
   label: Label;
   compositions: Composition[];
   artist?: string;
@@ -61,7 +64,19 @@ const RecordDetails: React.FC = () => {
             </Link>
           </p>
           <p>
-            <b>Цена:</b> {record.price ?? record.retail_price} ₽
+            <b>На складе:</b> {record.price ?? record.stock_quantity}
+          </p>
+          <p>
+            <b>Продажи в прошлом году:</b> {record.price ?? record.sales_previous_year}
+          </p>
+          <p>
+            <b>Продажи в этом году:</b> {record.price ?? record.sales_current_year}
+          </p>
+          <p>
+            <b>Розничная цена:</b> {record.price ?? record.retail_price} ₽
+          </p>
+          <p>
+            <b>Оптовая цена:</b> {record.price ?? record.wholesale_price} ₽
           </p>
         </div>
         <div className="flex flex-col md:w-1/2">
