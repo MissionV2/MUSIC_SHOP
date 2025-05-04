@@ -1,28 +1,41 @@
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
+from schemas.record import Record
 
-class OrderItemBase(BaseModel):
+class OrderItemCreate(BaseModel):
     record_id: int
     quantity: int
 
-class OrderItemCreate(OrderItemBase):
-    pass
+class OrderCreate(BaseModel):
+    user_id: int
+    items: List[OrderItemCreate]
 
-class OrderItemOut(OrderItemBase):
-    id: int
+class OrderItem(BaseModel):
+    record_id: int
+    quantity: int
     class Config:
         orm_mode = True
 
-class OrderBase(BaseModel):
-    pass
-
-class OrderCreate(OrderBase):
-    items: List[OrderItemCreate]
-
-class OrderOut(OrderBase):
+class Order(BaseModel):
     id: int
-    created_at: datetime
+    user_id: int
+    items: List[OrderItem]
+    class Config:
+        orm_mode = True
+
+class OrderItemOut(BaseModel):
+    record_id: int
+    quantity: int
+    record: Record  # Полная информация о товаре
+
+    class Config:
+        orm_mode = True
+
+class OrderOut(BaseModel):
+    id: int
+    user_id: int
     items: List[OrderItemOut]
+
     class Config:
         orm_mode = True
