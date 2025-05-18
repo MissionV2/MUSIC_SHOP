@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<{ username: string; email: string } | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -16,17 +17,26 @@ const Header: React.FC = () => {
 
   return (
     <header className="flex justify-between items-center p-4 bg-red-600 text-white">
-      <h1>MUSIC SHOP</h1>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-white bg-black rounded-full px-3 py-1 mr-2 hover:bg-gray-800"
+          aria-label="Назад"
+        >
+          ←
+        </button>
+        <h1>MUSIC SHOP</h1>
+      </div>
       <div>
         {user ? (
           <Link to={'/profile'}>
-                <span>{user.username}</span>
+            <span>{user.username}</span>
           </Link>
         ) : (
-          <>
-            <Link to="/login">Вход</Link>
-            <Link to="/registration">Регистрация</Link>
-          </>
+          <div className="flex gap-2 items-center">
+            <Link to="/login" className="px-4 py-3 bg-black">Вход</Link>
+            <Link to="/registration" className="px-4 py-3 bg-black">Регистрация</Link>
+          </div>
         )}
       </div>
     </header>

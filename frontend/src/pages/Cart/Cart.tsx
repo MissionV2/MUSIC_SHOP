@@ -100,7 +100,7 @@ export default function Cart() {
       <div className="absolute bottom-0">
         <button
           onClick={handleOrder}
-          className="fixed bottom-0 w-full py-5 bg-red-600"
+          className="fixed bottom-20 w-full py-5 bg-red-600"
         >
           Сделать заказ
         </button>
