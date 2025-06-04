@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {
-  const [user, setUser] = useState<{ username: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ username: string; email: string; is_admin?: boolean } | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -26,6 +26,11 @@ const Header: React.FC = () => {
           ←
         </button>
         <h1>MUSIC SHOP</h1>
+        {user?.is_admin && (
+          <Link to="/admin" className="ml-4 bg-black px-3 py-1 rounded text-xs">
+            Админ-панель
+          </Link>
+        )}
       </div>
       <div>
         {user ? (

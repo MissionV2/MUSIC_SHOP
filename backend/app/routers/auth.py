@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from schemas.user import UserCreate, UserLogin, UserOut
-from crud.user import create_user, get_user_by_username
+from crud.user import create_user, get_user_by_username, authenticate_user
 from dependencies import get_db
 
 router = APIRouter()
@@ -15,11 +15,20 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 # Авторизация (логин)
 @router.post("/login", response_model=UserOut)
-def login(user: UserLogin, db: Session = Depends(get_db)):
-    db_user = get_user_by_username(db, user.username)
-    if not db_user or db_user.password != user.password:
+def login(user_in: UserLogin, db: Session = Depends(get_db)):
+    user = authenticate_user(db, user_in.username, user_in.password)
+    if not user:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
-    return db_user
+    # Если это "виртуальный" админ, возвращаем словарь для Pydantic
+    if hasattr(user, "username") and user.username == "admin":
+        return {
+            "id": 0,
+            "username": "admin",
+            "email": "admin@musicshop.local",
+            "is_active": True,
+            "is_admin": True
+        }
+    return user
 
 # Получение профиля по username (НЕ защищено)
 @router.get("/profile/{username}", response_model=UserOut)
