@@ -38,12 +38,12 @@ export async function deleteEnsemble(id: number) {
 export interface Ensemble {
   id: number;
   name: string;
-  city: string;
-  foundation_year: number;
+  formation_date: string; // формат YYYY-MM-DD
+  description: string;
 }
 
 export async function getAllEnsembles(): Promise<Ensemble[]> {
-  const res = await fetch(`/api/adminendpoints/ensembles/`, {
+  const res = await fetch(`http://127.0.0.1:8000/ensembles/`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });

@@ -45,7 +45,7 @@ export async function deleteComposition(id: number) {
 }
 
 export async function getAllCompositions(): Promise<Composition[]> {
-  const res = await fetch(`/api/adminendpoints/compositions/`, {
+  const res = await fetch(`http://127.0.0.1:8000/compositions/`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
