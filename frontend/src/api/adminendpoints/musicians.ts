@@ -1,4 +1,4 @@
-const API_PREFIX = "/api/adminendpoints/musicians";
+const API_PREFIX = "http://127.0.0.1:8000/musicians";
 
 function getAuthHeaders(): HeadersInit {
   const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -9,7 +9,16 @@ function getAuthHeaders(): HeadersInit {
   return headers;
 }
 
-export async function createMusician(data: object) {
+export interface Musician {
+  id: number;
+  full_name: string;
+  birth_date: string;
+  death_date: string;
+  nationality: string;
+  bio: string;
+}
+
+export async function createMusician(data: Omit<Musician, "id">) {
   const res = await fetch(`${API_PREFIX}/`, {
     method: "POST",
     headers: getAuthHeaders(),
@@ -18,7 +27,7 @@ export async function createMusician(data: object) {
   return res.json();
 }
 
-export async function updateMusician(id: number, data: object) {
+export async function updateMusician(id: number, data: Omit<Musician, "id">) {
   const res = await fetch(`${API_PREFIX}/${id}`, {
     method: "PUT",
     headers: getAuthHeaders(),
@@ -35,7 +44,7 @@ export async function deleteMusician(id: number) {
   return res.json();
 }
 
-export async function getAllMusicians() {
+export async function getAllMusicians(): Promise<Musician[]> {
   const res = await fetch(`${API_PREFIX}/`, {
     method: "GET",
     headers: getAuthHeaders(),

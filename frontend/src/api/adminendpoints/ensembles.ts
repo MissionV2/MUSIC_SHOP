@@ -1,4 +1,4 @@
-const API_PREFIX = "/api/adminendpoints/ensembles";
+const API_PREFIX = "http://127.0.0.1:8000/ensembles";
 
 function getAuthHeaders(): HeadersInit {
   const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -31,6 +31,21 @@ export async function deleteEnsemble(id: number) {
   const res = await fetch(`${API_PREFIX}/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(),
+  });
+  return res.json();
+}
+
+export interface Ensemble {
+  id: number;
+  name: string;
+  city: string;
+  foundation_year: number;
+}
+
+export async function getAllEnsembles(): Promise<Ensemble[]> {
+  const res = await fetch(`/api/adminendpoints/ensembles/`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
   });
   return res.json();
 }

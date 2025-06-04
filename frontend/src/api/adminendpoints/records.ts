@@ -35,10 +35,23 @@ export async function deleteRecord(id: number) {
   return res.json();
 }
 
-export async function getAllRecords() {
-  const res = await fetch(`${API_PREFIX}/`, {
+export interface RecordType {
+  id: number;
+  catalog_number: string;
+  title: string;
+  release_date: string;
+  wholesale_price: number;
+  retail_price: number;
+  stock_quantity: number;
+  sales_current_year: number;
+  sales_previous_year: number;
+  label_id: number;
+}
+
+export async function getAllRecords(): Promise<RecordType[]> {
+  const res = await fetch(`/api/adminendpoints/records/`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: { "Content-Type": "application/json" },
   });
   return res.json();
 }

@@ -5,11 +5,10 @@ import Layout from "../components/layout/Layout/Layout";
 import AdminPanel from "../pages/AdminPanel/AdminPanel";
 import Labels from "../pages/AdminPanel/Labels/Labels";
 import AdminRoute from "./AdminRoute";
-// import Musicians from "../pages/AdminPanel/Musicians/Musicians";
-// import Compositions from "../pages/AdminPanel/Compositions/Compositions";
-// import Ensembles from "../pages/AdminPanel/Ensembles/Ensembles";
-// import Records from "../pages/AdminPanel/Records/Records";
-// import AdminRoute from "./AdminRoute";
+import Musicians from "../pages/AdminPanel/Musicians/Musicians";
+import Compositions from "../pages/AdminPanel/Compositions/Compositions";
+import Ensembles from "../pages/AdminPanel/Ensembles/Ensembles";
+import Records from "../pages/AdminPanel/Records/Records";
 
 const AppRouter: React.FC = () => (
   <BrowserRouter>
@@ -34,7 +33,7 @@ const AppRouter: React.FC = () => (
             </AdminRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/admin/musicians"
           element={
             <AdminRoute>
@@ -65,7 +64,7 @@ const AppRouter: React.FC = () => (
               <Records />
             </AdminRoute>
           }
-        /> */}
+        />
       </Routes>
     </Layout>
   </BrowserRouter>

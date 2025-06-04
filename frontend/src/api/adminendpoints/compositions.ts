@@ -1,4 +1,4 @@
-const API_PREFIX = "/api/adminendpoints/compositions";
+const API_PREFIX = "http://127.0.0.1:8000/compositions";
 
 function getAuthHeaders(): HeadersInit {
   const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -7,6 +7,15 @@ function getAuthHeaders(): HeadersInit {
     headers["Authorization"] = `Bearer ${user.token}`;
   }
   return headers;
+}
+
+export interface Composition {
+  id: number;
+  title: string;
+  year: number;
+  genre: string;
+  duration: number;
+  ensemble_id: number;
 }
 
 export async function createComposition(data: object) {
@@ -35,10 +44,10 @@ export async function deleteComposition(id: number) {
   return res.json();
 }
 
-export async function getAllCompositions() {
-  const res = await fetch(`${API_PREFIX}/`, {
+export async function getAllCompositions(): Promise<Composition[]> {
+  const res = await fetch(`/api/adminendpoints/compositions/`, {
     method: "GET",
-    headers: getAuthHeaders(),
+    headers: { "Content-Type": "application/json" },
   });
   return res.json();
 }
