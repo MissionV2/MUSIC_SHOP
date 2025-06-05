@@ -33,20 +33,25 @@ export default function Labels() {
 
   return (
     <div className="p-8">
-      <h2 className="text-xl font-bold mb-4">Лейблы</h2>
+      <h2 className="text-2xl font-bold mb-4">Лейблы</h2>
       <form onSubmit={handleSubmit} className="mb-4 flex gap-2 flex-col">
+        <h2>Название (name) — название лейбла</h2>
         <input
           value={form.name}
           onChange={e => setForm({ ...form, name: e.target.value })}
           placeholder="Название"
           className="border px-2"
         />
+
+        <h2>Адрес (address) — адрес лейбла</h2>
         <input
           value={form.address}
           onChange={e => setForm({ ...form, address: e.target.value })}
           placeholder="Адрес"
           className="border px-2"
         />
+
+        <h2>Оптовик (is_wholesaler) — является ли лейбл оптовиком</h2>
         <label>
           <input
             type="checkbox"
@@ -54,6 +59,7 @@ export default function Labels() {
             onChange={e => setForm({ ...form, is_wholesaler: e.target.checked })}
           /> Оптовик
         </label>
+
         <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
           {editId ? "Сохранить" : "Добавить"}
         </button>

@@ -42,9 +42,12 @@ export default function Ensembles() {
 
   return (
     <div className="p-8">
-      <h2 className="text-xl font-bold mb-4">Ансамбли</h2>
+      <h2 className="text-2xl font-bold mb-4">Ансамбли</h2>
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col gap-2">
+        <h2>Название (name) — название ансамбля</h2>
         <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Название" className="border px-2" />
+
+        <h2>Дата основания (formation_date) — дата создания ансамбля</h2>
         <input
           value={form.formation_date}
           onChange={e => setForm({ ...form, formation_date: e.target.value })}
@@ -52,7 +55,10 @@ export default function Ensembles() {
           type="date"
           className="border px-2"
         />
+
+        <h2>Описание (description) — краткое описание ансамбля</h2>
         <input value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} placeholder="Описание" className="border px-2" />
+
         <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">{editId ? "Сохранить" : "Добавить"}</button>
         {editId && <button type="button" onClick={() => { setEditId(null); setForm({ name: "", formation_date: "", description: "" }); }}>Отмена</button>}
       </form>

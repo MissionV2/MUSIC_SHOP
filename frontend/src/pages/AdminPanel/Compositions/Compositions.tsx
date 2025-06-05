@@ -34,13 +34,23 @@ export default function Compositions() {
 
   return (
     <div className="p-8">
-      <h2 className="text-xl font-bold mb-4">Композиции</h2>
+      <h2 className="text-2xl font-bold mb-4">Композиции</h2>
       <form onSubmit={handleSubmit} className="mb-4 flex gap-2 flex-wrap">
+        <h2>Название (title) — название композиции</h2>
         <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="Название" className="border px-2" />
+
+        <h2>Год (year) — год создания композиции</h2>
         <input value={form.year} onChange={e => setForm({ ...form, year: +e.target.value })} placeholder="Год" type="number" className="border px-2" />
+
+        <h2>Жанр (genre) — музыкальный жанр композиции</h2>
         <input value={form.genre} onChange={e => setForm({ ...form, genre: e.target.value })} placeholder="Жанр" className="border px-2" />
+
+        <h2>Длительность (duration) — длительность композиции в секундах</h2>
         <input value={form.duration} onChange={e => setForm({ ...form, duration: +e.target.value })} placeholder="Длительность (сек)" type="number" className="border px-2" />
+
+        <h2>ID ансамбля (ensemble_id) — идентификатор ансамбля</h2>
         <input value={form.ensemble_id} onChange={e => setForm({ ...form, ensemble_id: +e.target.value })} placeholder="ID ансамбля" type="number" className="border px-2" />
+
         <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">{editId ? "Сохранить" : "Добавить"}</button>
         {editId && <button type="button" onClick={() => { setEditId(null); setForm({ title: "", year: 2020, genre: "", duration: 0, ensemble_id: 1 }); }}>Отмена</button>}
       </form>

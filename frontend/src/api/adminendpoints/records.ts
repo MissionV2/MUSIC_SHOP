@@ -1,4 +1,4 @@
-const API_PREFIX = "/api/adminendpoints/records";
+const API_PREFIX = "http://127.0.0.1:8000/records";
 
 function getAuthHeaders(): HeadersInit {
   const user = JSON.parse(localStorage.getItem("user") || "null");
@@ -49,7 +49,7 @@ export interface RecordType {
 }
 
 export async function getAllRecords(): Promise<RecordType[]> {
-  const res = await fetch(`/api/adminendpoints/records/`, {
+  const res = await fetch(`http://127.0.0.1:8000/records`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
